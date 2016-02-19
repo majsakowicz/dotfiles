@@ -1,25 +1,27 @@
-" .vimrc file modified by Dan Sheffner
-
-" Lots of credit to:
-" Sample .vimrc file by Martin Brochhaus
-" Presented at PyCon APAC 2012
-"
-runtime ~/.vim/bundle/pathogen/autoload/pathogen.vim
+" Setup Pathogen to manage your plugins
+" mkdir -p ~/.vim/autoload ~/.vim/bundle
+" curl -so ~/.vim/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/HEAD/autoload/pathogen.vim
+" Now you can install any plugin into a .vim/bundle/plugin-name/ folder
+call pathogen#infect()
+call pathogen#helptags()
 
 " Automatic reloading of .vimrc
 autocmd! bufwritepost .vimrc source %
 
-" map ctrl n to line numbers
-:nmap <C-N><C-N> :set invnumber<CR>
+
+" Better copy & paste
+set pastetoggle=<F2>
+set clipboard=unnamed
+
 
 " Mouse and backspace
-" set mouse=a " on OSX press ALT and click
-set bs=2 " make backspace behave like normal again
+set bs=2     " make backspace behave like normal again
+set mouse=a " enable mouse
+
 
 " Rebind <Leader> key
-" I like to have it here becuase it is easier to reach than the default and
-" it is next to ``m`` and ``n`` which I use for navigating between tabs.
 let mapleader = ","
+
 
 " Bind nohl
 " Removes highlight of your last search
@@ -28,14 +30,17 @@ noremap <C-n> :nohl<CR>
 vnoremap <C-n> :nohl<CR>
 inoremap <C-n> :nohl<CR>
 
+
 " Quicksave command
 noremap <C-Z> :update<CR>
 vnoremap <C-Z> <C-C>:update<CR>
 inoremap <C-Z> <C-O>:update<CR>
 
+
 " Quick quit command
-noremap <Leader>e :quit<CR> " Quit current window
-noremap <Leader>E :qa!<CR> " Quit all windows
+noremap <Leader>e :quit<CR>  " Quit current window
+noremap <Leader>E :qa!<CR>   " Quit all windows
+
 
 " bind Ctrl+<movement> keys to move around the windows, instead of using Ctrl+w + <movement>
 " Every unnecessary keystroke that can be saved is good for your health :)
@@ -44,71 +49,56 @@ map <c-k> <c-w>k
 map <c-l> <c-w>l
 map <c-h> <c-w>h
 
+
 " easier moving between tabs
 map <Leader>n <esc>:tabprevious<CR>
 map <Leader>m <esc>:tabnext<CR>
 
-" map sort function to a key
-vnoremap <Leader>s :sort<CR>
 
 " easier moving of code blocks
-" Try to go into visual mode (v), thenselect several lines of code here and
+" Try to go into visual mode (v), then select several lines of code here and
 " then press ``>`` several times.
-vnoremap < <gv " better indentation
-vnoremap > >gv " better indentation
+vnoremap < <gv  " better indentation
+vnoremap > >gv  " better indentation
+
 
 " Show whitespace
 " MUST be inserted BEFORE the colorscheme command
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 au InsertLeave * match ExtraWhitespace /\s\+$/
 
-" Color scheme
-" mkdir -p ~/.vim/colors && cd ~/.vim/colors
-" wget -O wombat256mod.vim http://www.vim.org/scripts/download_script.php?src_id=13400
-" set t_Co=256
-" color wombat256mod
-syntax enable
-colorscheme monokai
+" Disable syntax highlight for files larger than 50 MB
+autocmd BufWinEnter * if line2byte(line("$") + 1) > 50000000 | syntax clear | endif
 
 " Enable syntax highlighting
-" You need to reload this file for the change to apply
-"
-
-" Pathogen load
 filetype off
-
-call pathogen#infect()
-call pathogen#helptags()
-
 filetype plugin indent on
 syntax on
 
-set nocompatible
-set nocp
 
 " Showing line numbers and length
-set number " show line numbers
-set tw=79 " width of document (used by gd)
-set nowrap " don't automatically wrap on load
-set fo-=t " don't automatically wrap text when typing
+set number  " show line numbers
+set tw=79   " width of document (used by gd)
+set nowrap  " don't automatically wrap on load
+set fo-=t   " don't automatically wrap text when typing
 set colorcolumn=80
 highlight ColorColumn ctermbg=233
 
 
-" easier formatting of paragraphs
-vmap Q gq
-nmap Q gqap
-
 " Useful settings
 set history=700
 set undolevels=700
+set cursorline
+set scrolloff=3
 
-" Real programmers don't use TABs but spaces
+
+" use spaces
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set shiftround
 set expandtab
+
 
 " Make search case insensitive
 set hlsearch
@@ -116,90 +106,150 @@ set incsearch
 set ignorecase
 set smartcase
 
+
 " Disable stupid backup and swap files - they trigger too many events
 " for file system watchers
 set nobackup
 set nowritebackup
 set noswapfile
 
-" Setup Pathogen to manage your plugins
-" mkdir -p ~/.vim/autoload ~/.vim/bundle
-" curl -so ~/.vim/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/HEAD/autoload/pathogen.vim
-" Now you can install any plugin into a .vim/bundle/plugin-name/ folder
 
 " ============================================================================
 " Python IDE Setup
 " ============================================================================
-
-" Settings for vim-powerline
-" cd ~/.vim/bundle
-" git clone git://github.com/Lokaltog/vim-powerline.git
+" Powerline
+" cd ~
+" git clone https://github.com/Lokaltog/powerline.git
+" cd powerline
+" sudo python setup.py install
+set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
 set laststatus=2
+
+
+" Color scheme
+" cd ~/.vim/bundle/
+" git clone https://github.com/widatama/vim-phoenix.git
+"set background=dark
+"let g:solarized_termcolors=16
+" -----------------------------
+set t_Co=16
+set cursorline
+colorscheme phoenix
+
 
 " Settings for ctrlp
 " cd ~/.vim/bundle
 " git clone https://github.com/kien/ctrlp.vim.git
 let g:ctrlp_max_height = 30
 set wildignore+=*.pyc
-set wildignore+=*_build/*
+set wildignore+=*build/*
+set wildignore+=*dist/*
+set wildignore+=*.egg-info/*
 set wildignore+=*/coverage/*
+
 
 " Settings for python-mode
 " cd ~/.vim/bundle
 " git clone https://github.com/klen/python-mode
-" map <Leader>g :call RopeGotoDefinition()<CR>
-" let ropevim_enable_shortcuts = 1
-" let g:pymode_rope_goto_def_newwin = vnew
-" let g:pymode_rope_extended_complete = 1
-" let g:pymode_breakpoint = 0
-" let g:pymode_syntax = 1
-" let g:pymode_syntax_builtin_objs = 0
-" let g:pymode_syntax_builtin_funcs = 0
-" let g:pymode_rope_lookup_project = 0
-map <Leader>b Oimport ipdb; ipdb.set_trace() # BREAKPOINT<C-c>
+let ropevim_enable_shortcuts = 1
+let g:pymode_lint = 1
+let g:pymode_lint_unmodified = 1
+let g:pymode_rope_goto_def_newwin = "vnew"
+let g:pymode_run = 0
+let g:pymode_rope_extended_complete = 1
+let g:pymode_breakpoint = 1
+let g:pymode_syntax = 1
+let g:pymode_virtualenv = 1
+
 
 " Better navigating through omnicomplete option list
 " See http://stackoverflow.com/questions/2170023/how-to-map-keys-for-popup-menu-in-vim
 set completeopt=longest,menuone
 function! OmniPopup(action)
-  if pumvisible()
-    if a:action == 'j'
-      return "\<C-N>"
-    elseif a:action == 'k'
-      return "\<C-P>"
+    if pumvisible()
+        if a:action == 'j'
+            return "\<C-N>"
+        elseif a:action == 'k'
+            return "\<C-P>"
+        endif
     endif
-  endif
-  return a:action
+    return a:action
 endfunction
 
 inoremap <silent><C-j> <C-R>=OmniPopup('j')<CR>
 inoremap <silent><C-k> <C-R>=OmniPopup('k')<CR>
+
 
 " Python folding
 " mkdir -p ~/.vim/ftplugin
 " wget -O ~/.vim/ftplugin/python_editing.vim http://www.vim.org/scripts/download_script.php?src_id=5492
 set nofoldenable
 
-" Neocomplete
-" let g:neocomplete#enable_at_startup = 1
-"
-set wildmenu
-set wildmode=list:longest,full
 
-set clipboard=unnamedplus
+" NERDTree
+" cd ~/.vim/bundle
+" git clone https://github.com/scrooloose/nerdtree.git
+nmap <leader>t :NERDTree<CR>
 
-" load up the nerd tree
-autocmd vimenter * NERDTree
-map <Leader>t <plug>NERDTreeTabsToggle<CR>
+" Display hidden files
+let NERDTreeShowHidden=1
 
-" move nerdtree to the left
-let g:NERDTreeWinPos = "left"
-" " move to the first buffer
-autocmd VimEnter * wincmd p
 
-" paste toggle
-set pastetoggle=<F2>
+" Close vim if the only window left open is NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
-" turn off auto complete
-" let g:pymode_rope_completion = 0
-" let g:pymode_rope_complete_on_dot = 0
+
+" Ack for vim
+" sudo apt-get install ack-grep
+" cd ~/.vim/bundle
+" git clone https://github.com/mileszs/ack.vim.git
+nmap <leader>a <Esc>:Ack!
+
+
+" Vim Git Gutter
+" cd ~/.vim/bundle
+" git clone https://github.com/airblade/vim-gitgutter.git
+let g:gitgutter_enabled = 0
+nmap <leader>gr :GitGutterToggle<CR>
+nmap <leader>s :GitGutterPrevHunk<CR>
+nmap <leader>d :GitGutterNextHunk<CR>
+
+
+" Tagbar
+" cd ~/.vim/bundle
+" git clone git://github.com/majutsushi/tagbar
+nmap <F8> :TagbarToggle<CR>
+
+" Sorted according to their order in the source file
+let g:tagbar_sort = 0
+
+
+" Vim viwki
+" cd ~/.vim/bundle
+" git clone https://github.com/vimwiki/vimwiki.gi://github.com/vimwiki/vimwiki.git
+" command: VimwikiAll2HTML
+
+
+" Vim Move
+" cd ~/.vim/bundle
+" git clone https://github.com/matze/vim-move.git
+" let g:move_key_modifier = 'C'
+
+
+" ============================================================================
+" My functions
+" ============================================================================
+function! DjangoMode()
+    autocmd FileType python set ft=python.django
+    autocmd FileType html set ft=htmldjango.html
+endfunction
+map <Leader>dm :call DjangoMode()<CR>
+
+
+" ============================================================================
+" Filetype detection
+" ============================================================================
+au BufNewFile,BufRead *.tac setl ft=python " .tac files are used in twisted
+au BufNewFile,BufRead *.json setl ft=javascript
+au BufNewFile,BufRead *.txt setl ft=text
+
