@@ -1,37 +1,24 @@
 """"""""""""""""""""""""""""""""""""""""
 """"" PLUGINS """""
 """"""""""""""""""""""""""""""""""""""""
-" git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
-set nocompatible	" required
-filetype off		" required
+call plug#begin('~/.vim/plugged')
+" make sure you use single quotes
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+"============ALL PLUGINS MUST BE DECLARED BELOW HERE=====================
+" any valid git URL is allowed
+Plug 'https://github.com/kien/ctrlp.vim.git'	" open files, etc
+Plug 'https://github.com/Valloric/YouCompleteMe.git'	" C++/Python completion
+Plug 'https://github.com/vim-airline/vim-airline.git'	" status/tabline for vim
+Plug 'https://github.com/vim-airline/vim-airline-themes.git'
+"==========ALL PLUGINS MUST BE DECLARED ABOVE HERE=======================
 
-"============ALL VUNDLE PLUGINS MUST BE DECLARED BELOW HERE=====================
-Plugin 'VundleVim/Vundle.vim'		" let Vundle manage Vundle, required
-Plugin 'ctrlpvim/ctrlp.vim'		" searching files
-Plugin 'Valloric/YouCompleteMe'		" C++/Python completion
-Plugin 'kana/vim-operator-user.git' " Prereq for vim-clang-format
-Plugin 'rhysd/vim-clang-format.git' " C++ code formatting
-"==========ALL VUNDLE PLUGINS MUST BE DECLARED ABOVE HERE=======================
-
-call vundle#end()            " required
-filetype plugin indent on    " required, automatically detects type of files
-
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
+call plug#end()
 
 " to install:
-" launch vim and run :PluginInstall
-" from command line: vim +PluginInstall +qall
+" launch vim and run :PlugInstall
+
+filetype plugin indent on    " required, automatically detects type of files
 
 set wildmenu
 
@@ -46,18 +33,21 @@ let g:ctrlp_working_path_mode = 0   " search from current directory
 "let g:ctrlp_user_command = 'find %s -type f'	" custom file listing command 
 
 " YouCompleteMe
-"let g:ycm_autoclose_preview_window_after_completion=1
-"map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+let g:ycm_autoclose_preview_window_after_completion=1
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 let g:ycm_global_ycm_extra_conf = '~/cpp/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
 
-" Clang Format
-let g:clang_format#style_options = {
-            \ "AccessModifierOffset" : -4,
-            \ "AllowShortIfStatementsOnASingleLine" : "true",
-            \ "AlwaysBreakTemplateDeclarations" : "true",
-            \ "Standard" : "C++11",
-            \ "BreakBeforeBraces" : "Stroustrup"}
+" Airline
+" automatically displays all buffers when there's only 1 tab
+let g:airline#extensions#tabline#enabled = 1
+
+let g:airline_powerline_fonts = 1
+
+" it will appear all the time
+set laststatus=2
+
+:let g:airline_theme='badwolf'
 
 
 """"""""""""""""""""""""""""""""""""""""
