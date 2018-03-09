@@ -1,0 +1,12 @@
+
+https://lab.pentestit.ru/
+https://jhalon.github.io/pentestit-lab-11-intro/
+https://jhalon.github.io/pentestit-lab-10-intro/
+https://lab.pentestit.ru/docs/TL9_WU_en.pdf
+https://lab.pentestit.ru/docs/TL8_WU_en.pdf 
+
+mount read only:
+mount -o ro source:/data local/directory/
+
+
+
